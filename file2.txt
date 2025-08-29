@@ -8,3 +8,54 @@ Feature: Google Search
     When I enter "Selenium WebDriver" in the search box
     And I click the search button
     Then I should see results related to "Selenium WebDriver"
+
+//Code written in Java, Selenium and Cucumber
+//Step Definition: 
+
+import io.cucumber.java.en.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import static org.testng.Assert.assertTrue;
+
+public class GoogleSearchSteps {
+
+    WebDriver driver;
+
+    @Given("I am on the Google homepage")
+    public void i_am_on_the_google_homepage() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://www.google.com");
+    }
+
+    @When("I enter {string} in the search box")
+    public void i_enter_in_the_search_box(String searchTerm) {
+        driver.findElement(By.name("q")).sendKeys(searchTerm);
+    }
+
+    @When("I click the search button")
+    public void i_click_the_search_button() {
+        driver.findElement(By.name("q")).submit(); // pressing Enter
+    }
+
+    @Then("I should see results related to {string}")
+    public void i_should_see_results_related_to(String searchTerm) {
+        String pageSource = driver.getPageSource();
+        assertTrue(pageSource.contains(searchTerm), 
+                   "Results page should contain the search term");
+        driver.quit();
+    }
+}
+
+//Test Runner
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
+@CucumberOptions(
+    features = "src/test/resources/features",
+    glue = {"stepdefinitions"},
+    plugin = {"pretty", "html:target/cucumber-report.html"}
+)
+public class TestRunner extends AbstractTestNGCucumberTests {
+}
