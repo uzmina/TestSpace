@@ -1,0 +1,13 @@
+Name of the Test: Test Positive Login
+
+Objective: To validate user is able to login successfully 
+Pre-requisite: User has signed up for the app AND has a valid account
+
+Steps:
+1. Launch app
+2. Enter username/email
+3. Enter Password
+4. Click Login button
+
+Expected Results:User is logged in successfully without any errors
+Actual Results: PASS/FAIL
