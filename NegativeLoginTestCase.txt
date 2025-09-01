@@ -1,0 +1,17 @@
+Negative username test
+1. Launch login page
+2. Type username incorrectUser into Username field
+3. Type password Password123 into Password field
+4. Click Submit button
+5. Verify error message is displayed
+6. Verify error message text 
+Expected Results: "Your username is invalid!" error is displayed
+
+Negative password test
+1. Launch login page
+2. Type username student into Username field
+3. Type password incorrectPassword into Password field
+4. Click Submit button
+5. Verify error message is displayed
+6. Verify error message text 
+Expected Results: "Your password is invalid!" error is displayed
