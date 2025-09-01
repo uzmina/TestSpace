@@ -1,0 +1,43 @@
+Test Case ID: API_TC_001
+Test Case Title: Verify the GET /users API returns valid response
+Preconditions:
+1. API server is up and running
+2. Valid authentication token is available (if required)
+
+Test Steps:
+1. Send a GET request to /users endpoint.
+2. Observe the HTTP status code.
+3. Verify response headers contain Content-Type: application/json.
+4. Validate response body structure: should include fields id, name, email.
+5. Verify response time is less than 2 seconds.
+
+Expected Result:
+1. Status code = 200 OK
+2. Response header has Content-Type: application/json
+3. Response body contains valid JSON with required fields (id, name, email)
+4. Response time ≤ 2000 ms
+
+//Code using Java, Rest Assured and TestNg
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
+
+public class VerifyUsersApiTest {
+
+    @Test
+    public void verifyGetUsersApi() {
+        RestAssured.baseURI = "https://reqres.in/api";
+
+        given()
+            .when()
+            .get("/users?page=1")
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON)
+            .body("data.id", notNullValue())
+            .body("data.email", everyItem(containsString("@")))
+            .time(lessThan(2000L)); // response time in ms
+    }
+}
